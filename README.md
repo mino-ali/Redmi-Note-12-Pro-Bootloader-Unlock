@@ -84,7 +84,7 @@ the device, returning it safely to factory working state.
 PREREQUISITES
 --------------------------------------------------------------------------------
 * Windows:
-  1. Python
+  1. Python in PATH
   2. Git
   3. Fastboot / Android USB drivers
 
@@ -168,4 +168,4 @@ This project builds upon the groundbreaking work of several open-source
 developers, security researchers, and the MediaTek modding community.
 
 For full credits, component licenses, and upstream repositories, please see:
--> CREDITS.md
+-> [CREDITS.md](https://github.com/mino-ali/Redmi-Note-12-Pro-Bootloader-Unlock/blob/main/CREDITS.md)
