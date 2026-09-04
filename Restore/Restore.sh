@@ -54,15 +54,28 @@ if [ ! -f "backup/lk_a.img" ]; then
     read -p "Press Enter to exit..."
     exit 1
 fi
-if [ ! -f "DA.bin" ]; then
+if [ ! -f "backup/lk_b.img" ]; then
     echo ""
-    echo "[!] Error: 'DA.bin' is missing from the bin directory!"
+    echo "[!] Error: No backup found in bin/backup/ directory!"
+    echo "[!] Cannot restore because backup/lk_b.img is missing."
     read -p "Press Enter to exit..."
     exit 1
 fi
-if [ ! -f "preloader.bin" ]; then
+
+DA_FILE="MTK_AllInOne_DA.bin"
+[ ! -f "$DA_FILE" ] && [ -f "DA.bin" ] && DA_FILE="DA.bin"
+if [ ! -f "$DA_FILE" ]; then
     echo ""
-    echo "[!] Error: 'preloader.bin' is missing from the bin directory!"
+    echo "[!] Error: MTK_AllInOne_DA.bin is missing from the bin directory!"
+    read -p "Press Enter to exit..."
+    exit 1
+fi
+
+PL_FILE="preloader_ruby.bin"
+[ ! -f "$PL_FILE" ] && [ -f "preloader.bin" ] && PL_FILE="preloader.bin"
+if [ ! -f "$PL_FILE" ]; then
+    echo ""
+    echo "[!] Error: preloader_ruby.bin is missing from the bin directory!"
     read -p "Press Enter to exit..."
     exit 1
 fi
@@ -70,12 +83,12 @@ fi
 echo ""
 echo "[1/2] Flashing lk_a..."
 echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
-flash_retry "lk_a" ./antumbra w lk_a backup/lk_a.img --da DA.bin -p preloader.bin
+flash_retry "lk_a" ./antumbra w lk_a backup/lk_a.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
 echo "[2/2] Flashing lk_b..."
 echo "If the device rebooted, please power it off again, then reconnect."
-flash_retry "lk_b" ./antumbra w lk_b backup/lk_b.img --da DA.bin -p preloader.bin
+flash_retry "lk_b" ./antumbra w lk_b backup/lk_b.img --da "$DA_FILE" -p "$PL_FILE"
 
 read -p "Press Enter to exit..."
-exit 1
+exit 0

@@ -90,14 +90,13 @@ To respect copyright and open-source licensing laws, proprietary vendor firmware
 
 1. Download the official Xiaomi Fastboot ROM (`.tgz`) matching the exact firmware version currently running on your phone.
 2. Extract the downloaded Fastboot ROM package on your computer.
-3. Extract and rename the following 2 files into the `bin` folder:
+3. Copy the following 2 files directly into the `bin/` folder (no renaming needed):
    * From the `images/` folder of the extracted ROM:  
-     Find `preloader_ruby.bin` ➔ **Rename to:** `preloader.bin` ➔ Place inside the `bin` folder.
+     Copy `preloader_ruby.bin` into the `bin/` folder.
    * From the root folder of the extracted ROM:  
-     Find `MTK_AllInOne_DA.bin` ➔ **Rename to:** `DA.bin` ➔ Place inside the `bin` folder.
+     Copy `MTK_AllInOne_DA.bin` into the `bin/` folder.
 
-Make sure both `bin/preloader.bin` and `bin/DA.bin` exist before proceeding.
-
+Ensure both `bin/preloader_ruby.bin` and `bin/MTK_AllInOne_DA.bin` are in place before proceeding.
 ---
 
 ## 🚀 Step-by-Step Unlock Tutorial
