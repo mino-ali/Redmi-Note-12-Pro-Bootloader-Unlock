@@ -76,8 +76,9 @@ If something goes wrong during the unlock process and your device fails to boot 
 ### Linux
 1. Install the required packages using your package manager:
    * **Ubuntu / Debian:** `sudo apt install python3 python3-pip git android-tools-fastboot libudev-dev`
+   * **Fedora / RHEL:** `sudo dnf install python3 python3-pip git android-tools systemd-devel`
    * **Arch / Manjaro:** `sudo pacman -S python python-pip git android-tools systemd-libs`
-2. *Note:* `libudev` (`libudev-dev` / `systemd-libs`) is a required Linux dependency.
+2. *Note:* `libudev` (`libudev-dev` / `systemd-devel` / `systemd-libs`) is a required Linux dependency.
 
 > [!TIP]
 > After installing all requirements for the first time, a system reboot is required.
