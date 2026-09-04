@@ -141,7 +141,30 @@ Make sure both `bin/preloader.bin` and `bin/DA.bin` exist before proceeding.
 
 ## 📜 Credits & Acknowledgments
 
-This project builds upon the groundbreaking work of several open-source developers, security researchers, and the MediaTek modding community.
+This project is made possible thanks to the groundbreaking research, tools, and libraries developed by the open-source community, security researchers, and reverse engineers:
 
-For full credits, component licenses, and upstream repositories, please see:  
-➔ [**CREDITS.md**](https://github.com/mino-ali/Redmi-Note-12-Pro-Bootloader-Unlock/blob/main/CREDITS.md)
+### Core Exploit & LK Patching
+* **Georgiy Nesterov ([@georgiynesterov](https://github.com/georgiynesterov))** — Creator of [lk-unlock](https://github.com/georgiynesterov/lk-unlock), the foundational research and tool for patching the OEM public key modulus in the MediaTek Little Kernel (LK) to forge fastboot unlock signatures.
+* **R0rt1z2 ([@R0rt1z2](https://github.com/R0rt1z2))** — Author of [liblk](https://github.com/R0rt1z2/liblk), providing low-level parsing, manipulation, and certificate chain bypass for MediaTek LK images.
+
+### BROM Exploitation & Flashing Engine
+* **shomykohai ([@shomykohai](https://github.com/shomykohai))** — Creator of [penumbra](https://github.com/shomykohai/penumbra) and the Antumbra CLI/TUI, providing the high-speed Rust-based MediaTek BootROM communication engine used to dump and flash partitions.
+* **Bjoern Kerler ([@bkerler](https://github.com/bkerler))** — Creator of [mtkclient](https://github.com/bkerler/mtkclient) and pioneer of modern open-source MediaTek reverse engineering and payload delivery.
+
+### USB Drivers & Connectivity
+* **Travis Robinson & the libusbK Team** — Authors of [libusbK](https://github.com/mcuee/libusbk) and [libusb-win32](http://libusb-win32.sourceforge.net), enabling open-source, filter USB communication with MediaTek hardware in BootROM mode on Windows.
+
+### Testers & Device Verification
+The following individuals helped test and verify this exploit on real hardware:
+* *(Add your device testers here)*
+
+### Special Thanks
+* *(Add friends, mentors, or contributors who helped you)*
+* **XDA Developers & 4PDA Communities** — For ongoing Android research, partition documentation, and device testing.
+* **The wider MediaTek & Xiaomi modding community** — For keeping Android devices open and accessible.
+
+---
+
+## 📄 License
+
+This project is licensed under the **GNU Affero General Public License v3.0** — see [LICENSE](LICENSE) for details.
