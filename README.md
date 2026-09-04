@@ -7,11 +7,11 @@ DISCLAIMER & IMPORTANT PRE-CHECKS
 --------------------------------------------------------------------------------
 * DEVICE COMPATIBILITY & LIABILITY WARNING:
   With a few modifications, this exploit workflow can work on any Xiaomi MediaTek
-  (MTK) device. HOWEVER, this repository is made for and ONLY TESTED on "ruby"
-  (Redmi Note 12 Pro / Pro+ / Discovery 5G). DO NOT attempt to use it with any
-  other device! Otherwise, the author of this tool is NOT responsible for any
+  (MTK) device. however, this repository is made for and only tested on "ruby"
+  (Redmi Note 12 Pro / Pro+ / Discovery 5G). do not attempt to use it with any
+  other device! Otherwise, the author of this tool is not responsible for any
   damage, bricked devices, or hardware issues caused by misuse of it. Proceed entirely at your own risk!
-* DATA LOSS: Unlocking the bootloader performs a full factory reset. ALL photos,
+* DATA LOSS: Unlocking the bootloader performs a full factory reset. all photos,
   apps, files, messages, and settings will be permanently wiped. Back up your
   important files to your computer or cloud before proceeding!
 * BATTERY: Charge your device to at least 50% before starting. Never unplug the
@@ -84,9 +84,9 @@ the device, returning it safely to factory working state.
 PREREQUISITES
 --------------------------------------------------------------------------------
 * Windows:
-  1. Python: Install Python using the Python manager https://www.python.org/downloads/
-  2. Git: Install from https://git-scm.com/install/windows
-  3. Fastboot / Android USB drivers https://androiddatahost.com/jzkh5
+  1. Python
+  2. Git
+  3. Fastboot / Android USB drivers
 
 * Linux:
   1. Install required packages using your package manager:
@@ -94,7 +94,7 @@ PREREQUISITES
      - Arch / Manjaro: sudo pacman -S python python-pip git android-tools systemd-libs
   2. NOTE: "libudev" (libudev-dev / libudev1 / systemd-libs) is a required Linux dependency!
 
-* NOTE: After installing all prerequisites, a reboot IS REQUIRED!
+* NOTE: After installing all prerequisites, a reboot is required!
 
 
 REQUIRED FILES SETUP
