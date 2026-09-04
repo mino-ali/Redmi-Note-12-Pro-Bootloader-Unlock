@@ -20,9 +20,8 @@ DISCLAIMER & IMPORTANT PRE-CHECKS
   of your motherboard (a USB 2.0 port is best for MediaTek BROM stability). Do
   not use unpowered USB hubs or loose front-panel ports.
 
-================================================================================
+
 [!!!] CRITICAL NOTE 1: BOOTLOADER RELOCK AFTER FLASHING ANY ROM [!!!]
-================================================================================
 
 READ THIS CAREFULLY BEFORE FLASHING ANY ROM OR SYSTEM UPDATE:
 
@@ -37,9 +36,9 @@ your PC and RUN THE UNLOCK SCRIPT AGAIN after the flash. Once the script finishe
 the device will boot up normally.
 
 
-================================================================================
+
 [!!!] CRITICAL NOTE 2: ERROR SCREENS [!!!]
-================================================================================
+
 
 If the bootloader relocks itself after you flash a ROM, you will see one of
 these two scary error screens:
@@ -63,9 +62,9 @@ As soon as you re-run the unlock script, the error will disappear and the phone
 will boot straight into your ROM.
 
 
-================================================================================
+
 EMERGENCY RESTORE SCRIPTS (IF ANYTHING GOES WRONG)
-================================================================================
+
 
 If something went wrong during the unlock process, and your device fails to boot up:
 
@@ -96,9 +95,9 @@ PREREQUISITES
 
 * NOTE: After installing all prerequisites, a reboot IS REQUIRED!
 
-================================================================================
-REQUIRED FILES SETUP (DO THIS BEFORE STEP 1)
-================================================================================
+
+REQUIRED FILES SETUP
+
 
 To respect copyright and open-source licensing laws, proprietary vendor firmware
 binaries are NOT included in this repository. You MUST extract them from your
@@ -110,15 +109,15 @@ official stock Fastboot ROM before running the scripts:
 3. Extract and rename the following 2 files into the "bin" folder:
    - Go to the "images" folder of the extracted ROM:
      Find "preloader_ruby.bin" -> Rename it to "preloader.bin" -> Place it inside the "bin" folder.
-   - Go to the root folder of the extracted ROM:
+   - Go to the the folder of the extracted ROM:
      Find "MTK_AllInOne_DA.bin" -> Rename it to "DA.bin" -> Place it inside the "bin" folder.
 
 Make sure both "bin/preloader.bin" and "bin/DA.bin" exist before proceeding!
 
 
-================================================================================
+
 STEP-BY-STEP UNLOCK TUTORIAL
-================================================================================
+
 
 STEP 1 (WINDOWS): LAUNCH THE SCRIPT
 -----------------------------------
@@ -169,4 +168,3 @@ developers, security researchers, and the MediaTek modding community.
 
 For full credits, component licenses, and upstream repositories, please see:
 -> CREDITS.md
-================================================================================
