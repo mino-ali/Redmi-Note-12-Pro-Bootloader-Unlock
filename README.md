@@ -22,6 +22,7 @@ DISCLAIMER & IMPORTANT PRE-CHECKS
 
 
 [!!!] CRITICAL NOTE 1: BOOTLOADER RELOCK AFTER FLASHING ANY ROM [!!!]
+--------------------------------------------------------------------------------
 
 READ THIS CAREFULLY BEFORE FLASHING ANY ROM OR SYSTEM UPDATE:
 
@@ -38,7 +39,7 @@ the device will boot up normally.
 
 
 [!!!] CRITICAL NOTE 2: ERROR SCREENS [!!!]
-
+--------------------------------------------------------------------------------
 
 If the bootloader relocks itself after you flash a ROM, you will see one of
 these two scary error screens:
