@@ -73,6 +73,7 @@ fi
 
 PL_FILE="preloader_ruby.bin"
 [ ! -f "$PL_FILE" ] && [ -f "preloader.bin" ] && PL_FILE="preloader.bin"
+[ ! -f "$PL_FILE" ] && [ -f "preloader_raw.bin" ] && PL_FILE="preloader_raw.bin"
 if [ ! -f "$PL_FILE" ]; then
     echo ""
     echo "[!] Error: preloader_ruby.bin is missing from the bin directory!"

@@ -50,6 +50,7 @@ if not exist "%DA_FILE%" (
 
 set "PL_FILE=preloader_ruby.bin"
 if not exist "%PL_FILE%" if exist "preloader.bin" set "PL_FILE=preloader.bin"
+if not exist "%PL_FILE%" if exist "preloader_raw.bin" set "PL_FILE=preloader_raw.bin"
 if not exist "%PL_FILE%" (
     echo.
     echo [!] Error: preloader_ruby.bin is missing from the bin folder!
