@@ -1,7 +1,6 @@
-================================================================================
-  REDMI NOTE 12 PRO / PRO+ / DISCOVERY (ruby) BOOTLOADER UNLOCK GUIDE
-  Automated LK-Unlock Exploit for (ruby / rubypro) by mino_ali
-================================================================================
+- REDMI NOTE 12 PRO / PRO+ / DISCOVERY (ruby) BOOTLOADER UNLOCK GUIDE
+  Automated LK-Unlock Exploit for (ruby / rubypro)
+
 
 --------------------------------------------------------------------------------
 DISCLAIMER & IMPORTANT PRE-CHECKS
@@ -11,9 +10,7 @@ DISCLAIMER & IMPORTANT PRE-CHECKS
   (MTK) device. HOWEVER, this repository is made for and ONLY TESTED on "ruby"
   (Redmi Note 12 Pro / Pro+ / Discovery 5G). DO NOT attempt to use it with any
   other device! Otherwise, the author of this tool is NOT responsible for any
-  damage, bricked devices, or hardware issues caused by it. Furthermore, the author
-  is NOT responsible for any damage caused by misuse of the tool even on the same
-  device. Proceed entirely at your own risk!
+  damage, bricked devices, or hardware issues caused by misuse of it. Proceed entirely at your own risk!
 * DATA LOSS: Unlocking the bootloader performs a full factory reset. ALL photos,
   apps, files, messages, and settings will be permanently wiped. Back up your
   important files to your computer or cloud before proceeding!
