@@ -29,10 +29,28 @@ if ! command -v fastboot &> /dev/null; then
     read -p "Press Enter to exit..."
     exit 1
 fi
+echo ""
+echo "Checking for required vendor binaries..."
+if [ ! -f "DA.bin" ]; then
+    echo ""
+    echo "[!] Error: 'DA.bin' is missing from the bin directory!"
+    echo "[!] Please extract MTK_AllInOne_DA.bin from your stock Fastboot ROM,"
+    echo "[!] rename it to 'DA.bin', and place it inside the bin/ directory."
+    read -p "Press Enter to exit..."
+    exit 1
+fi
+if [ ! -f "preloader.bin" ]; then
+    echo ""
+    echo "[!] Error: 'preloader.bin' is missing from the bin directory!"
+    echo "[!] Please extract preloader_ruby.bin from your stock ROM images/ folder,"
+    echo "[!] rename it to 'preloader.bin', and place it inside the bin/ directory."
+    read -p "Press Enter to exit..."
+    exit 1
+fi
 
 echo ""
 echo "Checking and installing required Python dependencies..."
-python -m pip install cryptography git+https://github.com/R0rt1z2/liblk --break-system-packages
+python3 -m pip install cryptography git+https://github.com/R0rt1z2/liblk --break-system-packages
 if [ $? -ne 0 ]; then
     echo ""
     echo "An error occurred while installing dependencies. Please check the output above."

@@ -47,6 +47,25 @@ flash_retry() {
     read -p "Press Enter to exit..."
     exit 1
 }
+if [ ! -f "backup/lk_a.img" ]; then
+    echo ""
+    echo "[!] Error: No backup found in bin/backup/ directory!"
+    echo "[!] Cannot restore because backup/lk_a.img is missing."
+    read -p "Press Enter to exit..."
+    exit 1
+fi
+if [ ! -f "DA.bin" ]; then
+    echo ""
+    echo "[!] Error: 'DA.bin' is missing from the bin directory!"
+    read -p "Press Enter to exit..."
+    exit 1
+fi
+if [ ! -f "preloader.bin" ]; then
+    echo ""
+    echo "[!] Error: 'preloader.bin' is missing from the bin directory!"
+    read -p "Press Enter to exit..."
+    exit 1
+fi
 
 echo ""
 echo "[1/2] Flashing lk_a..."

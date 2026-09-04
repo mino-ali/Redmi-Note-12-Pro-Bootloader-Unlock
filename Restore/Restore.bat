@@ -6,11 +6,30 @@ set "PATH=%~dp0..\bin;%PATH%"
 
 net session >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo Please right-click Unlock.bat and select "Run as administrator".
+    echo Please right-click Restore.bat and select "Run as administrator".
     pause
     exit /b
 )
 
+if not exist "backup\lk_a.img" (
+    echo.
+    echo [!] Error: No backup found in bin\backup folder!
+    echo [!] Cannot restore because backup\lk_a.img is missing.
+    pause
+    exit /b 1
+)
+if not exist "DA.bin" (
+    echo.
+    echo [!] Error: "DA.bin" is missing from the bin folder!
+    pause
+    exit /b 1
+)
+if not exist "preloader.bin" (
+    echo.
+    echo [!] Error: "preloader.bin" is missing from the bin folder!
+    pause
+    exit /b 1
+)
 echo.
 echo Installing libusbK driver for BROM bypass...
 pnputil /add-driver "%~dp0..\usb_driver\*.inf" /install >nul 2>&1

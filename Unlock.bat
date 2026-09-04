@@ -35,6 +35,24 @@ if %ERRORLEVEL% NEQ 0 (
     pause
     exit /b
 )
+echo.
+echo Checking for required vendor binaries...
+if not exist "DA.bin" (
+    echo.
+    echo [!] Error: "DA.bin" is missing from the bin folder!
+    echo [!] Please extract MTK_AllInOne_DA.bin from your stock Fastboot ROM,
+    echo [!] rename it to "DA.bin", and place it in the "bin" folder.
+    pause
+    exit /b 1
+)
+if not exist "preloader.bin" (
+    echo.
+    echo [!] Error: "preloader.bin" is missing from the bin folder!
+    echo [!] Please extract preloader_ruby.bin from your stock ROM images folder,
+    echo [!] rename it to "preloader.bin", and place it in the "bin" folder.
+    pause
+    exit /b 1
+)
 
 echo.
 echo Checking and installing required Python dependencies...
@@ -48,9 +66,8 @@ if %ERRORLEVEL% NEQ 0 (
 
 if exist private.pem del /f /q private.pem
 if exist public.pem del /f /q public.pem
-if exist private.pem del /f /q signature.bin
-if exist public.pem del /f /q lk_patched.img
-
+if exist signature.bin del /f /q signature.bin
+if exist lk_patched.img del /f /q lk_patched.img
 echo.
 echo Installing libusbK driver for BROM bypass...
 pnputil /add-driver "%~dp0usb_driver\*.inf" /install >nul 2>&1
