@@ -43,7 +43,7 @@ This project is made possible thanks to the groundbreaking research, tools, and 
 
 ## Project Packaging & Ruby Adaptation
 
-* **@mino_ali**
+* **[mino_ali](https://github.com/mino-ali)**
   * **Contribution:** Adapting, testing, and automating the exploit workflow for Redmi Note 12 Pro / Pro+ / Discovery (`ruby` / `rubypro`), creating automation scripts, emergency restore scripts (`Restore/`), and user documentation.
   * **License:** GNU AGPLv3
 
