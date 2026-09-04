@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL_v3-blue.svg" alt="License: AGPL v3"></a>
+  <a href="https://www.gnu.org/licenses/agpl-3.0"><img src="https://img.shields.io/badge/License-AGPL_v3-blue.svg" alt="License: AGPL v3"></a>
   <img src="https://img.shields.io/badge/Device-Redmi_Note_12_Pro%20%2F%20Pro%2B%20(ruby)-orange.svg" alt="Device: ruby">
   <img src="https://img.shields.io/badge/SoC-MediaTek_Dimensity_1080-red.svg" alt="SoC: Dimensity 1080">
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-brightgreen.svg" alt="Platform">
@@ -152,4 +152,4 @@ Ensure both `bin/preloader_ruby.bin` and `bin/MTK_AllInOne_DA.bin` are in place 
 
 ## 📄 License
 
-This project is licensed under the **GNU Affero General Public License v3.0** — see [LICENSE](LICENSE) for details.
+This project is licensed under the **GNU Affero General Public License v3.0** — see [LICENSE](https://www.gnu.org/licenses/agpl-3.0) for details.
