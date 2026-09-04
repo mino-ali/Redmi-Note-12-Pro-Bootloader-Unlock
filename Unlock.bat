@@ -73,7 +73,6 @@ if exist private.pem del /f /q private.pem
 if exist public.pem del /f /q public.pem
 if exist signature.bin del /f /q signature.bin
 if exist lk_patched.img del /f /q lk_patched.img
-if exist preloader_dump.bin del /f /q preloader_dump.bin
 echo.
 echo Installing libusbK driver for BROM bypass...
 pnputil /add-driver "%~dp0usb_driver\*.inf" /install >nul 2>&1
@@ -82,7 +81,7 @@ echo Driver installation finished.
 echo.
 echo [1/3] Reading preloader...
 echo Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)
-antumbra r preloader preloader_dump.bin --da %DA_FILE% -p %PL_FILE%
+antumbra r preloader %PL_FILE% --da %DA_FILE% -p %PL_FILE%
 
 echo.
 echo [2/3] Reading lk_a...

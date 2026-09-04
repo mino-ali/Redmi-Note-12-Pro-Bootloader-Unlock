@@ -122,12 +122,12 @@ read_retry() {
     exit 1
 }
 
-rm -f private.pem public.pem signature.bin lk_patched.img preloader_dump.bin
+rm -f private.pem public.pem signature.bin lk_patched.img
 
 echo ""
 echo "[1/3] Reading preloader..."
 echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
-read_retry "preloader" ./antumbra r preloader preloader_dump.bin --da "$DA_FILE" -p "$PL_FILE"
+read_retry "preloader" ./antumbra r preloader "$PL_FILE" --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
 echo "[2/3] Reading lk_a..."
