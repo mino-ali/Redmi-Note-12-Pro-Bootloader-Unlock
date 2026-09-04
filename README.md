@@ -93,7 +93,7 @@ To respect copyright and open-source licensing laws, proprietary vendor firmware
 3. Copy the following 2 files directly into the `bin/` folder (no renaming needed):
    * From the `images/` folder of the extracted ROM:  
      Copy `preloader_ruby.bin` into the `bin/` folder.
-   * From the root folder of the extracted ROM:  
+   * From the folder of the extracted ROM:  
      Copy `MTK_AllInOne_DA.bin` into the `bin/` folder.
 
 Ensure both `bin/preloader_ruby.bin` and `bin/MTK_AllInOne_DA.bin` are in place before proceeding.
