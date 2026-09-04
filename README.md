@@ -141,11 +141,12 @@ Make sure both `bin/preloader.bin` and `bin/DA.bin` exist before proceeding.
 
 ## 📜 Credits
 
-* [@georgiynesterov](https://github.com/georgiynesterov) for [lk-unlock](https://github.com/georgiynesterov/lk-unlock)
-* [@R0rt1z2](https://github.com/R0rt1z2) for [liblk](https://github.com/R0rt1z2/liblk)
-* [@shomykohai](https://github.com/shomykohai) for [penumbra](https://github.com/shomykohai/penumbra) / antumbra
-* [@bkerler](https://github.com/bkerler) for [mtkclient](https://github.com/bkerler/mtkclient)
-* [@mcuee](https://github.com/mcuee) & Travis Robinson for [libusbK](https://github.com/mcuee/libusbk)
+* [lk-unlock](https://github.com/georgiynesterov/lk-unlock) by [@georgiynesterov](https://github.com/georgiynesterov) for the original public key patching and token forging exploit.
+* Cert bypass code adapted from [lkpatcher](https://github.com/R0rt1z2/lkpatcher) and [liblk](https://github.com/R0rt1z2/liblk) by [@R0rt1z2](https://github.com/R0rt1z2).
+* [Penumbra](https://github.com/shomykohai/penumbra) (Antumbra CLI) by [@shomykohai](https://github.com/shomykohai) for dumping and flashing partitions via MediaTek BROM.
+* [mtkclient](https://github.com/bkerler/mtkclient) by [@bkerler](https://github.com/bkerler) for MediaTek exploitation and research.
+* [libusbK](https://github.com/mcuee/libusbk) by Travis Robinson and [@mcuee](https://github.com/mcuee) for USB driver support.
+* Xiaomi & MediaTek bootloader research community.
 * *(Add your testers and contributors here)*
 ---
 
