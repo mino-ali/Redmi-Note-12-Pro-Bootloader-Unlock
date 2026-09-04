@@ -40,7 +40,7 @@
 > Simply reconnect the phone to your PC and run the unlock script again after flashing. Once the script finishes, the device will boot normally.
 
 > [!NOTE]
-> ### 2. Expected error screens (your phone is not bricked)
+> ### 2. Expected error screens
 > If the bootloader relocks itself after you flash a ROM, you will see one of these two warning screens:
 > 
 > 1. **If locked on official MIUI or HyperOS:**  
