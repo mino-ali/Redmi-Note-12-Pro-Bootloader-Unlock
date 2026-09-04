@@ -67,17 +67,16 @@ If something goes wrong during the unlock process and your device fails to boot 
 
 ## 📦 Prerequisites
 
-* **Windows:**
-  1. Python (make sure it is added to your system PATH)
-  2. Git
-  3. Fastboot / Android USB drivers
+### Windows
+1. Python (make sure it is added to your system PATH)
+2. Git
+3. Fastboot / Android USB drivers
 
-* **Linux:**
-  1. Install the required packages using your package manager:
-     * **Ubuntu / Debian:** `sudo apt install python3 python3-pip git android-tools-fastboot libudev-dev`
-     * **Arch / Manjaro:** `sudo pacman -S python python-pip git android-tools systemd-libs`
-  2. *Note:* `libudev` (`libudev-dev` / `systemd-libs`) is a required Linux dependency.
-
+### Linux
+1. Install the required packages using your package manager:
+   * **Ubuntu / Debian:** `sudo apt install python3 python3-pip git android-tools-fastboot libudev-dev`
+   * **Arch / Manjaro:** `sudo pacman -S python python-pip git android-tools systemd-libs`
+2. *Note:* `libudev` (`libudev-dev` / `systemd-libs`) is a required Linux dependency.
 > [!TIP]
 > After installing all prerequisites for the first time, a system reboot is required.
 
@@ -104,8 +103,7 @@ Make sure both `bin/preloader.bin` and `bin/DA.bin` exist before proceeding.
 ### Step 1 (Windows): Launch the script
 1. Right-click `Unlock.bat` and select **Run as administrator**.
 2. When prompted by the data wipe warning, type `Y` and press Enter.
-3. The script will automatically install the bundled libusbK filter driver via Windows `pnputil` silently in the background (no popup window needed).
-4. Proceed to Step 2.
+3. Proceed to Step 2.
 
 ### Step 1 (Linux): Launch the script
 1. Open a terminal in the directory, make the script executable, and run with sudo:
