@@ -8,7 +8,7 @@ This project is made possible thanks to the groundbreaking research, tools, and 
 
 * **Georgiy Nesterov ([@georgiynesterov](https://github.com/georgiynesterov))**
   * **Project:** [lk-unlock](https://github.com/georgiynesterov/lk-unlock)
-  * **Contribution:** Creator of the foundational `lk-unlock` research and Python tool for unlocking Xiaomi MediaTek bootloaders by patching the OEM public key modulus in the Little Kernel (LK) and forging the fastboot unlock token signature.
+  * **Contribution:** Creator of `lk-unlock` Python tool for unlocking Xiaomi MediaTek bootloaders by patching the OEM public key modulus in the Little Kernel (LK) and forging the fastboot unlock token signature.
   * **License:** GNU AGPLv3
 
 * **R0rt1z2 ([@R0rt1z2](https://github.com/R0rt1z2))**
@@ -43,8 +43,8 @@ This project is made possible thanks to the groundbreaking research, tools, and 
 
 ## Project Packaging & Ruby Adaptation
 
-* **mino_ali**
-  * **Contribution:** Adapting, testing, and automating the exploit workflow specifically for the Redmi Note 12 Pro / Pro+ / Discovery (`ruby` / `rubypro`), creating the one-click Windows (`Unlock.bat`) and Linux (`Unlock.sh`) automation, emergency restore scripts (`Restore/`), and user documentation.
+* **@mino_ali**
+  * **Contribution:** Adapting, testing, and automating the exploit workflow for Redmi Note 12 Pro / Pro+ / Discovery (`ruby` / `rubypro`), creating automation scripts, emergency restore scripts (`Restore/`), and user documentation.
   * **License:** GNU AGPLv3
 
 ---
