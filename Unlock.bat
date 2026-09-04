@@ -123,7 +123,7 @@ echo If the device rebooted, please power it off again, then reconnect.
 antumbra w lk_b lk_patched.img --da %DA_FILE% -p %PL_FILE%
 
 echo.
-echo Uninstalling USBlibk...
+echo Uninstalling libusbK...
 powershell -NoProfile -Command "$inf = (Get-ChildItem -Path '%~dp0usb_driver\*.inf').Name; if ($inf) { Get-WindowsDriver -Online | Where-Object { $_.OriginalFileName -match $inf } | ForEach-Object { & pnputil /delete-driver $_.Driver /uninstall } }"
 
 for /f "tokens=*" %%i in ('powershell -NoProfile -Command "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -match 'USB\\\\VID_0E8D&PID_0003' } | Select-Object -ExpandProperty InstanceId"') do (
