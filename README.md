@@ -145,7 +145,7 @@ Make sure both `bin/preloader.bin` and `bin/DA.bin` exist before proceeding.
 * [@R0rt1z2](https://github.com/R0rt1z2) for [liblk](https://github.com/R0rt1z2/liblk)
 * [@shomykohai](https://github.com/shomykohai) for [penumbra](https://github.com/shomykohai/penumbra) / antumbra
 * [@bkerler](https://github.com/bkerler) for [mtkclient](https://github.com/bkerler/mtkclient)
-* Travis Robinson for [libusbK](https://github.com/mcuee/libusbk)
+* [@mcuee](https://github.com/mcuee) & Travis Robinson for [libusbK](https://github.com/mcuee/libusbk)
 * *(Add your testers and contributors here)*
 ---
 
