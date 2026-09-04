@@ -65,21 +65,22 @@ If something goes wrong during the unlock process and your device fails to boot 
 
 ---
 
-## 📦 Prerequisites
+## 📦 Requirements
 
 ### Windows
 1. Python (make sure it is added to your system PATH)
 2. Git
 3. Fastboot / Android USB drivers
+4. MediaTek VCOM USB drivers
 
 ### Linux
 1. Install the required packages using your package manager:
    * **Ubuntu / Debian:** `sudo apt install python3 python3-pip git android-tools-fastboot libudev-dev`
    * **Arch / Manjaro:** `sudo pacman -S python python-pip git android-tools systemd-libs`
 2. *Note:* `libudev` (`libudev-dev` / `systemd-libs`) is a required Linux dependency.
-> [!TIP]
-> After installing all prerequisites for the first time, a system reboot is required.
 
+> [!TIP]
+> After installing all requirements for the first time, a system reboot is required.
 ---
 
 ## 📁 Required Files Setup
