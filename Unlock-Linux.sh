@@ -159,7 +159,12 @@ if [ $? -ne 0 ]; then
     read -p "Press Enter to exit..."
     exit 1
 fi
+
 echo ""
+mkdir -p backup
+rm -f backup/lk_a.img backup/lk_b.img
+cp lk_a.img backup/lk_a.img
+cp lk_b.img backup/lk_b.img
 echo "[1/2] Flashing lk_a..."
 echo "If the device rebooted, please power it off again, then reconnect."
 flash_retry "lk_a" ./antumbra w lk_a lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
