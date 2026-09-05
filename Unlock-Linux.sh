@@ -85,11 +85,13 @@ trap restore_modemmanager EXIT
 
 flash_retry() {
     local desc="$1"; shift
-    local max_attempts=10
+    local max_attempts=5
     local attempt
-    for attempt in $(seq 1 "$max_attempts"); do
-        if [ "$attempt" -gt 1 ]; then
-            echo "  Retrying $desc (attempt $attempt/$max_attempts)..."
+    for ((attempt = 1; attempt <= max_attempts; attempt++)); do
+        if [ "$attempt" -eq 1 ]; then
+            echo "  [Attempt 1/$max_attempts] Connecting to $desc..."
+        else
+            echo "  [Attempt $attempt/$max_attempts] Retrying $desc..."
         fi
         if "$@"; then
             return 0
@@ -105,11 +107,13 @@ flash_retry() {
 
 read_retry() {
     local desc="$1"; shift
-    local max_attempts=10
+    local max_attempts=5
     local attempt
-    for attempt in $(seq 1 "$max_attempts"); do
-        if [ "$attempt" -gt 1 ]; then
-            echo "  Retrying $desc (attempt $attempt/$max_attempts)..."
+    for ((attempt = 1; attempt <= max_attempts; attempt++)); do
+        if [ "$attempt" -eq 1 ]; then
+            echo "  [Attempt 1/$max_attempts] Connecting to $desc..."
+        else
+            echo "  [Attempt $attempt/$max_attempts] Retrying $desc..."
         fi
         if "$@"; then
             return 0
@@ -128,17 +132,17 @@ rm -f private.pem public.pem signature.bin lk_patched.img
 echo ""
 echo "[1/3] Reading preloader..."
 echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
-read_retry "preloader" ./antumbra r preloader "$PL_FILE" --da "$DA_FILE" -p "$PL_FILE"
+read_retry "preloader" ./antumbra -c r preloader "$PL_FILE" --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
 echo "[2/3] Reading lk_a..."
 echo "If the device rebooted, please power it off again, then reconnect."
-read_retry "lk_a" ./antumbra r lk_a lk_a.img --da "$DA_FILE" -p "$PL_FILE"
+read_retry "lk_a" ./antumbra -c r lk_a lk_a.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
 echo "[3/3] Reading lk_b..."
 echo "If the device rebooted, please power it off again, then reconnect."
-read_retry "lk_b" ./antumbra r lk_b lk_b.img --da "$DA_FILE" -p "$PL_FILE"
+read_retry "lk_b" ./antumbra -c r lk_b lk_b.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo "Patching lk..."
 python3 lk-unlock.py patch lk_a.img -o lk_patched.img
@@ -158,12 +162,12 @@ cp lk_a.img backup/lk_a.img
 cp lk_b.img backup/lk_b.img
 echo "[1/2] Flashing lk_a..."
 echo "If the device rebooted, please power it off again, then reconnect."
-flash_retry "lk_a" ./antumbra w lk_a lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
+flash_retry "lk_a" ./antumbra -c w lk_a lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
 echo "[2/2] Flashing lk_b..."
 echo "If the device rebooted, please power it off again, then reconnect."
-flash_retry "lk_b" ./antumbra w lk_b lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
+flash_retry "lk_b" ./antumbra -c w lk_b lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
 echo ""

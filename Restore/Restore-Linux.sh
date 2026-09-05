@@ -30,11 +30,13 @@ trap restore_modemmanager EXIT
 
 flash_retry() {
     local desc="$1"; shift
-    local max_attempts=10
+    local max_attempts=5
     local attempt
-    for attempt in $(seq 1 "$max_attempts"); do
-        if [ "$attempt" -gt 1 ]; then
-            echo "  Retrying $desc (attempt $attempt/$max_attempts)..."
+    for ((attempt = 1; attempt <= max_attempts; attempt++)); do
+        if [ "$attempt" -eq 1 ]; then
+            echo "  [Attempt 1/$max_attempts] Connecting to $desc..."
+        else
+            echo "  [Attempt $attempt/$max_attempts] Retrying $desc..."
         fi
         if "$@"; then
             return 0
@@ -84,12 +86,12 @@ fi
 echo ""
 echo "[1/2] Flashing lk_a..."
 echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
-flash_retry "lk_a" ./antumbra w lk_a backup/lk_a.img --da "$DA_FILE" -p "$PL_FILE"
+flash_retry "lk_a" ./antumbra -c w lk_a backup/lk_a.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
 echo "[2/2] Flashing lk_b..."
 echo "If the device rebooted, please power it off again, then reconnect."
-flash_retry "lk_b" ./antumbra w lk_b backup/lk_b.img --da "$DA_FILE" -p "$PL_FILE"
+flash_retry "lk_b" ./antumbra -c w lk_b backup/lk_b.img --da "$DA_FILE" -p "$PL_FILE"
 
 read -p "Press Enter to exit..."
 exit 0
