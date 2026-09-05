@@ -89,7 +89,7 @@ To respect copyright and open-source licensing laws, proprietary vendor firmware
 
 1. Download the official Xiaomi Fastboot ROM (`.tgz`) matching the exact firmware version currently running on your phone.
 2. Extract the downloaded Fastboot ROM package on your computer.
-3. Copy the following 2 files directly into the `bin/` folder (no renaming needed):
+3. Copy the following 2 files directly into the `bin/` folder:
    * From the `images/` folder of the extracted ROM:  
      Copy `preloader_ruby.bin` into the `bin/` folder.
    * From the folder of the extracted ROM:  
