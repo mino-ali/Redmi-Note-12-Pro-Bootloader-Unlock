@@ -155,17 +155,10 @@ if [ $? -ne 0 ]; then
     echo ""
     echo "[!] Error during patching LK."
     echo "[!] If 'Xiaomi's public key modulus not found', the image is likely already patched."
-    echo "[!] Run Restore.sh then try again."
+    echo "[!] Run Restore-Linux.sh (in the Restore directory) then try again."
     read -p "Press Enter to exit..."
     exit 1
 fi
-
-echo ""
-mkdir -p backup
-rm -f backup/lk_a.img backup/lk_b.img
-cp lk_a.img backup/lk_a.img
-cp lk_b.img backup/lk_b.img
-
 echo ""
 echo "[1/2] Flashing lk_a..."
 echo "If the device rebooted, please power it off again, then reconnect."

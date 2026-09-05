@@ -6,7 +6,7 @@ set "PATH=%~dp0..\bin;%PATH%"
 
 net session >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo Please right-click Restore.bat and select "Run as administrator".
+    echo Please right-click Restore-Windows.bat and select "Run as administrator".
     pause
     exit /b
 )

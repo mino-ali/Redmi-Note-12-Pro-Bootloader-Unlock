@@ -5,7 +5,7 @@ set "PATH=%~dp0bin;%PATH%"
 
 net session >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo Please right-click Unlock.bat and select "Run as administrator".
+    echo Please right-click Unlock-Windows.bat and select "Run as administrator".
     pause
     exit /b
 )
@@ -107,7 +107,7 @@ if %ERRORLEVEL% NEQ 0 (
     echo.
     echo [!] Error during patching LK.
     echo [!] If "Xiaomi's public key modulus not found", the image is likely already patched.
-    echo [!] Run Restore.bat then try again.
+    echo [!] Run Restore-Windows.bat (in the Restore folder) then try again.
     pause
     exit /b 1
 )
@@ -148,7 +148,7 @@ echo =================================================================
 echo                 [!] ACTION REQUIRED [!]
 echo =================================================================
 echo  1. Disconnect the USB cable from the PC.
-echo  2. Wait 10s with the cable disconnected."
+echo  2. Wait 10s with the cable disconnected.
 echo  3. Power on into Fastboot mode:
 echo     -^> Press and hold (Volume Down + Power) until fastboot shows.
 echo  4. Reconnect the USB cable.
