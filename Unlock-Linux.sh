@@ -140,15 +140,6 @@ echo "[3/3] Reading lk_b..."
 echo "If the device rebooted, please power it off again, then reconnect."
 read_retry "lk_b" ./antumbra r lk_b lk_b.img --da "$DA_FILE" -p "$PL_FILE"
 
-if [ -f "backup/lk_a.img" ]; then
-    echo "Backup already exists, skipping."
-else
-    echo "Creating backup..."
-    mkdir -p backup
-    cp lk_a.img backup/lk_a.img
-    cp lk_b.img backup/lk_b.img
-fi
-
 echo "Patching lk..."
 python3 lk-unlock.py patch lk_a.img -o lk_patched.img
 if [ $? -ne 0 ]; then
