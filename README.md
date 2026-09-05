@@ -143,9 +143,9 @@ Ensure both `bin/preloader_ruby.bin` and `bin/MTK_AllInOne_DA.bin` are in place 
 * Cert bypass code adapted from [lkpatcher](https://github.com/R0rt1z2/lkpatcher) and [liblk](https://github.com/R0rt1z2/liblk) by [@R0rt1z2](https://github.com/R0rt1z2).
 * [Penumbra](https://github.com/shomykohai/penumbra) (Antumbra CLI) by [@shomykohai](https://github.com/shomykohai) for dumping and flashing partitions via MediaTek BROM.
 * [mtkclient](https://github.com/bkerler/mtkclient) by [@bkerler](https://github.com/bkerler) for MediaTek exploitation and research.
+* [libwdi](https://github.com/pbatard/libwdi) (`wdi-simple`) by [@pbatard](https://github.com/pbatard) for automated USB driver installation.
 * [@LucaCraft89](https://github.com/LucaCraft89) for script improvements and the global variant patch.
 * [@YagizErdemir06](https://github.com/YagizErdemir06) for overall support.
-* [libwdi](https://github.com/pbatard/libwdi) (`wdi-simple`) by [@pbatard](https://github.com/pbatard) for automated USB driver installation.
 * Xiaomi & MediaTek bootloader research community.
 ---
 
