@@ -30,8 +30,8 @@ jobs:
           curl -f -sSL "https://github.com/shomykohai/penumbra/releases/latest/download/antumbra" -o bin/antumbra
           chmod +x bin/antumbra
 
-          # Windows x86_64 libusb binary (renamed to antumbra.exe)
-          curl -f -sSL "https://github.com/shomykohai/penumbra/releases/latest/download/antumbra-libusb.exe" -o bin/antumbra.exe
+          # Windows x86_64 binary
+          curl -f -sSL "https://github.com/shomykohai/penumbra/releases/latest/download/antumbra.exe" -o bin/antumbra.exe
 
       - name: Check for modifications
         id: git_status
@@ -57,7 +57,7 @@ jobs:
             New releases or updates were detected from upstream repositories:
             * **LK-Unlock**: Updated `bin/lk-unlock.py` and `bin/xiaomi.pem` from [georgiynesterov/lk-unlock](https://github.com/georgiynesterov/lk-unlock).
             * **Antumbra (Linux)**: Updated `bin/antumbra` from [shomykohai/penumbra](https://github.com/shomykohai/penumbra/releases/latest).
-            * **Antumbra (Windows)**: Updated `bin/antumbra.exe` (using the libusb-compiled binary `antumbra-libusb.exe`) from [shomykohai/penumbra](https://github.com/shomykohai/penumbra/releases/latest).
+            * **Antumbra (Windows)**: Updated `bin/antumbra.exe` from [shomykohai/penumbra](https://github.com/shomykohai/penumbra/releases/latest).
 
             > [!NOTE]
             > This Pull Request is on the separate `upstream-updates` branch.
