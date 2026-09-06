@@ -145,21 +145,46 @@ echo "If the device rebooted, please power it off again, then reconnect."
 read_retry "lk_b" ./antumbra -c r lk_b lk_b.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo "Patching lk..."
-python3 lk-unlock.py patch lk_a.img -o lk_patched.img
-if [ $? -ne 0 ]; then
-    echo ""
-    echo "[!] Error during patching LK."
-    echo "[!] If 'Xiaomi's public key modulus not found', the image is likely already patched."
-    echo "[!] Run Restore-Linux.sh (in the Restore directory) then try again."
-    read -p "Press Enter to exit..."
-    exit 1
+PATCH_OUTPUT=$(python3 lk-unlock.py patch lk_a.img -o lk_patched.img 2>&1)
+PATCH_EXIT=$?
+echo "$PATCH_OUTPUT"
+
+if [ $PATCH_EXIT -ne 0 ]; then
+    if echo "$PATCH_OUTPUT" | grep -qi "public key modulus not found"; then
+        echo ""
+        echo "[*] Notice: The LK image on your device is already patched."
+        if [ ! -f "backup/lk_a.img" ]; then
+            echo ""
+            echo "[!] Error: No stock backup was found in the backup directory!"
+            echo "[!] Cannot re-patch without a clean stock backup."
+            echo "[!] Please place your stock lk_a.img into the backup directory, or restore stock firmware, then try again."
+            read -p "Press Enter to exit..."
+            exit 1
+        fi
+        echo "[*] Found stock backup in backup directory. Using it to re-patch and synchronize keys..."
+        cp backup/lk_a.img lk_a.img
+        python3 lk-unlock.py patch lk_a.img -o lk_patched.img
+        if [ $? -ne 0 ]; then
+            echo ""
+            echo "[!] Error during re-patching backup LK."
+            read -p "Press Enter to exit..."
+            exit 1
+        fi
+    else
+        echo ""
+        echo "[!] Error during patching LK."
+        read -p "Press Enter to exit..."
+        exit 1
+    fi
+else
+    mkdir -p backup
+    if [ ! -f "backup/lk_a.img" ]; then
+        cp lk_a.img backup/lk_a.img
+        cp lk_b.img backup/lk_b.img
+    fi
 fi
 
 echo ""
-mkdir -p backup
-rm -f backup/lk_a.img backup/lk_b.img
-cp lk_a.img backup/lk_a.img
-cp lk_b.img backup/lk_b.img
 echo "[1/2] Flashing lk_a..."
 echo "If the device rebooted, please power it off again, then reconnect."
 flash_retry "lk_a" ./antumbra -c w lk_a lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
@@ -168,7 +193,6 @@ echo ""
 echo "[2/2] Flashing lk_b..."
 echo "If the device rebooted, please power it off again, then reconnect."
 flash_retry "lk_b" ./antumbra -c w lk_b lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
-
 echo ""
 echo ""
 echo "================================================================="

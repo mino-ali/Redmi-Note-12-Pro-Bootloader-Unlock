@@ -1,8 +1,8 @@
 @echo off
 setlocal
+set "PYTHONUTF8=1"
 cd /d "%~dp0bin"
 set "PATH=%~dp0bin;%PATH%"
-
 net session >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
     echo Please right-click Unlock-Windows.bat and select "Run as administrator".
@@ -102,22 +102,56 @@ echo If the device rebooted, please power it off again, then reconnect.
 antumbra -c r lk_b lk_b.img --da %DA_FILE% -p %PL_FILE%
 echo.
 echo Patching lk...
-python lk-unlock.py patch lk_a.img -o lk_patched.img
-if %ERRORLEVEL% NEQ 0 (
+python lk-unlock.py patch lk_a.img -o lk_patched.img > patch_log.tmp 2>&1
+set "PATCH_ERR=%ERRORLEVEL%"
+type patch_log.tmp
+
+if %PATCH_ERR% EQU 0 goto :patch_success
+
+findstr /i "modulus not found" patch_log.tmp >nul 2>&1
+if not errorlevel 1 goto :already_patched
+
+del /f /q patch_log.tmp >nul 2>&1
+echo.
+echo [!] Error during patching LK.
+echo [!] Run Restore-Windows.bat (in the Restore folder) then try again.
+pause
+exit /b 1
+
+:already_patched
+del /f /q patch_log.tmp >nul 2>&1
+echo.
+echo [*] Notice: The LK image on your device is already patched.
+if not exist "backup\lk_a.img" (
     echo.
-    echo [!] Error during patching LK.
-    echo [!] If "Xiaomi's public key modulus not found", the image is likely already patched.
-    echo [!] Run Restore-Windows.bat (in the Restore folder) then try again.
+    echo [!] Error: No stock backup was found in the backup folder!
+    echo [!] Cannot re-patch without a clean stock backup.
+    echo [!] Please place your stock lk_a.img into the backup folder or restore stock firmware, then try again.
     pause
     exit /b 1
 )
 
+echo [*] Found stock backup in backup folder. Using it to re-patch and synchronize keys...
+copy /y "backup\lk_a.img" lk_a.img >nul
+python lk-unlock.py patch lk_a.img -o lk_patched.img
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo [!] Error during re-patching backup LK.
+    pause
+    exit /b 1
+)
+goto :do_flash
+
+:patch_success
+del /f /q patch_log.tmp >nul 2>&1
 echo.
 if not exist "backup" mkdir "backup"
-del /q /f "backup\lk_a.img" "backup\lk_b.img" >nul 2>&1
-copy /y lk_a.img "backup\lk_a.img" >nul
-copy /y lk_b.img "backup\lk_b.img" >nul
+if not exist "backup\lk_a.img" (
+    copy /y lk_a.img "backup\lk_a.img" >nul
+    copy /y lk_b.img "backup\lk_b.img" >nul
+)
 
+:do_flash
 echo.
 echo [1/2] Flashing lk_a...
 echo If the device rebooted, please power it off again, then reconnect.
@@ -127,7 +161,7 @@ echo.
 echo [2/2] Flashing lk_b...
 echo If the device rebooted, please power it off again, then reconnect.
 antumbra -c w lk_b lk_patched.img --da %DA_FILE% -p %PL_FILE%
-
+:skip_flash
 echo.
 echo Cleaning up temporary BROM driver assignment...
 for /f "tokens=*" %%i in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -match 'USB\\\\VID_0E8D&PID_0003' } | Select-Object -ExpandProperty InstanceId"') do (
