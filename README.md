@@ -87,7 +87,7 @@ If something goes wrong during the unlock process and your device fails to boot 
 ## ❓ Frequently Asked Questions (FAQ)
 
 > [!NOTE]
-> **Q: Everything ran smoothly, but when trying to reboot into Fastboot mode, my phone is stuck in BROM mode. What should I do?**  
+> **Q: When trying to reboot into Fastboot mode, my phone is stuck in BROM mode. What should I do?**  
 > **A:** First, run the [Restore script](#emergency-restore-scripts) for your operating system, then try the unlock process again. If the issue is still there, you will need to flash the `preloader` partition from your stock Fastboot ROM using either **Antumbra** or **SP Flash Tool**.
 
 ---
