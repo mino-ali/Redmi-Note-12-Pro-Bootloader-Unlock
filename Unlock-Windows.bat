@@ -85,12 +85,18 @@ for /f "tokens=*" %%i in ('powershell -NoProfile -ExecutionPolicy Bypass -Comman
 )
 wdi-simple.exe -n "MediaTek USB Port" -m "MediaTek Inc." -v 0x0E8D -p 0x0003 -t 0 --silent
 echo Driver registration complete.
-
 echo.
+if /i "%PL_FILE%"=="preloader_ruby.bin" if exist "preloader_ruby.bin" (
+    if not exist "backup" mkdir "backup" >nul 2>&1
+    for %%F in ("preloader_ruby.bin") do (
+        if %%~zF LSS 2097152 (
+            copy /y "preloader_ruby.bin" "backup\preloader_ruby.bin" >nul 2>&1
+        )
+    )
+)
 echo [1/3] Reading preloader...
 echo Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)
 antumbra -c r preloader %PL_FILE% --da %DA_FILE% -p %PL_FILE%
-
 echo.
 echo [2/3] Reading lk_a...
 echo If the device rebooted, please power it off again, then reconnect.
@@ -106,33 +112,127 @@ python lk-unlock.py patch lk_a.img -o lk_patched.img > patch_log.tmp 2>&1
 set "PATCH_ERR=%ERRORLEVEL%"
 type patch_log.tmp
 
+findstr /i /c:"Skipping cert bypass" patch_log.tmp >nul 2>&1
+if not errorlevel 1 goto :spoofed_bootloader
+
 if %PATCH_ERR% EQU 0 goto :patch_success
 
-findstr /i "modulus not found" patch_log.tmp >nul 2>&1
+findstr /i /c:"modulus not found" patch_log.tmp >nul 2>&1
 if not errorlevel 1 goto :already_patched
 
 del /f /q patch_log.tmp >nul 2>&1
 echo.
 echo [!] Error during patching LK.
-echo [!] Run Restore-Windows.bat (in the Restore folder) then try again.
+echo [!] Run Restore-Windows.bat [in the Restore folder] then try again.
 pause
 exit /b 1
+
+:spoofed_bootloader
+del /f /q patch_log.tmp >nul 2>&1
+echo.
+echo [*] Notice: Bootloader is spoofed as locked!
+
+set "SPOOF_RESTORE_LK_A="
+set "SPOOF_RESTORE_LK_B="
+
+if exist "backup\lk_a.img" if exist "backup\lk_b.img" (
+    set "SPOOF_RESTORE_LK_A=backup\lk_a.img"
+    set "SPOOF_RESTORE_LK_B=backup\lk_b.img"
+)
+
+if not defined SPOOF_RESTORE_LK_A if exist "backup\lk.img" (
+    set "SPOOF_RESTORE_LK_A=backup\lk.img"
+    set "SPOOF_RESTORE_LK_B=backup\lk.img"
+)
+
+set "BACKUP_PL="
+if exist "backup\preloader_ruby.bin" set "BACKUP_PL=backup\preloader_ruby.bin"
+
+if not defined SPOOF_RESTORE_LK_A (
+    echo.
+    echo [!] Error: No stock LK backup was found to restore from!
+    echo [!] To fix this, extract lk.img [or lk_a.img / lk_b.img] and preloader_ruby.bin
+    echo [!] from your official stock Fastboot ROM and copy them into the bin\backup folder.
+    echo [!] Then run Restore-Windows.bat [in the Restore folder] to restore stock firmware first.
+    pause
+    exit /b 1
+)
+
+if not defined BACKUP_PL (
+    echo.
+    echo [!] Error: No stock preloader backup found in the backup folder!
+    echo [!] Cannot safely restore from a spoofed bootloader without stock preloader.
+    echo [!] Please copy preloader_ruby.bin into the bin\backup folder, then try again.
+    pause
+    exit /b 1
+)
+
+echo [*] Stock backups found. Restoring device to stock firmware...
+echo.
+echo [1/4] Flashing preloader...
+echo Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)
+antumbra -c w preloader %BACKUP_PL% --da %DA_FILE% -p %PL_FILE%
+
+echo.
+echo [2/4] Flashing preloader_backup...
+echo If the device rebooted, please power it off again, then reconnect.
+antumbra -c w preloader_backup %BACKUP_PL% --da %DA_FILE% -p %PL_FILE%
+
+echo.
+echo [3/4] Flashing lk_a...
+echo If the device rebooted, please power it off again, then reconnect.
+antumbra -c w lk_a %SPOOF_RESTORE_LK_A% --da %DA_FILE% -p %PL_FILE%
+
+echo.
+echo [4/4] Flashing lk_b...
+echo If the device rebooted, please power it off again, then reconnect.
+antumbra -c w lk_b %SPOOF_RESTORE_LK_B% --da %DA_FILE% -p %PL_FILE%
+echo.
+echo Formatting para partition...
+echo If the device rebooted, please power it off again, then reconnect.
+antumbra -c ft para --da %DA_FILE% -p %PL_FILE%
+
+echo.
+echo Cleaning up temporary BROM driver assignment...
+for /f "tokens=*" %%i in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -match 'USB\\\\VID_0E8D&PID_0003' } | Select-Object -ExpandProperty InstanceId"') do (
+    pnputil /remove-device "%%i" >nul 2>&1
+)
+
+if exist "%TEMP%\mtk_vcom_backup\*.inf" (
+    echo Restoring original MediaTek VCOM driver...
+    pnputil /add-driver "%TEMP%\mtk_vcom_backup\*.inf" /install >nul 2>&1
+    rmdir /s /q "%TEMP%\mtk_vcom_backup" >nul 2>&1
+)
+
+pnputil /scan-devices >nul 2>&1
+echo Driver cleanup complete.
+
+echo.
+echo [*] Device successfully restored to stock!
+echo [*] Please run Unlock-Windows.bat again to unlock your clean stock bootloader.
+pause
+exit /b 0
 
 :already_patched
 del /f /q patch_log.tmp >nul 2>&1
 echo.
 echo [*] Notice: The LK image on your device is already patched.
-if not exist "backup\lk_a.img" (
+
+set "STOCK_LK_SOURCE="
+if exist "backup\lk_a.img" set "STOCK_LK_SOURCE=backup\lk_a.img"
+if not defined STOCK_LK_SOURCE if exist "backup\lk.img" set "STOCK_LK_SOURCE=backup\lk.img"
+
+if not defined STOCK_LK_SOURCE (
     echo.
     echo [!] Error: No stock backup was found in the backup folder!
     echo [!] Cannot re-patch without a clean stock backup.
-    echo [!] Please place your stock lk_a.img into the backup folder or restore stock firmware, then try again.
+    echo [!] Please place your stock lk.img [or lk_a.img] into the backup folder or restore stock firmware, then try again.
     pause
     exit /b 1
 )
 
 echo [*] Found stock backup in backup folder. Using it to re-patch and synchronize keys...
-copy /y "backup\lk_a.img" lk_a.img >nul
+copy /y "%STOCK_LK_SOURCE%" lk_a.img >nul
 python lk-unlock.py patch lk_a.img -o lk_patched.img
 if %ERRORLEVEL% NEQ 0 (
     echo.
@@ -161,7 +261,6 @@ echo.
 echo [2/2] Flashing lk_b...
 echo If the device rebooted, please power it off again, then reconnect.
 antumbra -c w lk_b lk_patched.img --da %DA_FILE% -p %PL_FILE%
-:skip_flash
 echo.
 echo Cleaning up temporary BROM driver assignment...
 for /f "tokens=*" %%i in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -match 'USB\\\\VID_0E8D&PID_0003' } | Select-Object -ExpandProperty InstanceId"') do (
@@ -186,6 +285,8 @@ echo  2. Wait 10s with the cable disconnected.
 echo  3. Power on into Fastboot mode:
 echo     -^> Press and hold (Volume Down + Power) until fastboot shows.
 echo  4. Reconnect the USB cable.
+echo.
+echo  Unable to reboot? Run the restore script and try again!
 echo =================================================================
 echo.
 

@@ -53,6 +53,7 @@
 
 ---
 
+<span id="emergency-restore-scripts"></span>
 ## 🔄 Emergency Restore Scripts
 
 If something goes wrong during the unlock process and your device fails to boot up, a `Restore/` folder is included to flash your original stock partition backups back onto the device:
@@ -81,6 +82,14 @@ If something goes wrong during the unlock process and your device fails to boot 
 
 > [!TIP]
 > After installing all requirements for the first time, a system reboot is required.
+---
+
+## ❓ Frequently Asked Questions (FAQ)
+
+> [!NOTE]
+> **Q: Everything ran smoothly, but when trying to reboot into Fastboot mode, my phone is stuck in BROM mode. What should I do?**  
+> **A:** First, run the [Restore script](#emergency-restore-scripts) for your operating system, then try the unlock process again. If the issue is still there, you will need to flash the `preloader` partition from your stock Fastboot ROM using either **Antumbra** or **SP Flash Tool**.
+
 ---
 
 ## 📁 Required Files Setup

@@ -129,11 +129,18 @@ read_retry() {
 
 rm -f private.pem public.pem signature.bin lk_patched.img
 
+if [ "$PL_FILE" = "preloader_ruby.bin" ] && [ -f "preloader_ruby.bin" ]; then
+    PL_SIZE=$(stat -c%s "preloader_ruby.bin" 2>/dev/null || stat -f%z "preloader_ruby.bin" 2>/dev/null || echo 0)
+    if [ "$PL_SIZE" -gt 0 ] && [ "$PL_SIZE" -lt 2097152 ] 2>/dev/null; then
+        mkdir -p backup >/dev/null 2>&1
+        cp -f "preloader_ruby.bin" "backup/preloader_ruby.bin" >/dev/null 2>&1
+    fi
+fi
+
 echo ""
 echo "[1/3] Reading preloader..."
 echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
 read_retry "preloader" ./antumbra -c r preloader "$PL_FILE" --da "$DA_FILE" -p "$PL_FILE"
-
 echo ""
 echo "[2/3] Reading lk_a..."
 echo "If the device rebooted, please power it off again, then reconnect."
@@ -149,20 +156,100 @@ PATCH_OUTPUT=$(python3 lk-unlock.py patch lk_a.img -o lk_patched.img 2>&1)
 PATCH_EXIT=$?
 echo "$PATCH_OUTPUT"
 
+if echo "$PATCH_OUTPUT" | grep -qi "Skipping cert bypass"; then
+    echo ""
+    echo "[*] Notice: Bootloader is spoofed as locked!"
+
+    SPOOF_RESTORE_LK_A=""
+    SPOOF_RESTORE_LK_B=""
+
+    if [ -f "backup/lk_a.img" ] && [ -f "backup/lk_b.img" ]; then
+        SPOOF_RESTORE_LK_A="backup/lk_a.img"
+        SPOOF_RESTORE_LK_B="backup/lk_b.img"
+    elif [ -f "backup/lk.img" ]; then
+        SPOOF_RESTORE_LK_A="backup/lk.img"
+        SPOOF_RESTORE_LK_B="backup/lk.img"
+    fi
+
+    BACKUP_PL=""
+    if [ -f "backup/preloader_ruby.bin" ]; then
+        BACKUP_PL="backup/preloader_ruby.bin"
+    fi
+
+    if [ -z "$SPOOF_RESTORE_LK_A" ]; then
+        echo ""
+        echo "[!] Error: No stock LK backup was found to restore from!"
+        echo "[!] To fix this, extract lk.img (or lk_a.img/lk_b.img) and preloader_ruby.bin"
+        echo "[!] from your official stock Fastboot ROM and copy them into the bin/backup/ directory."
+        echo "[!] Then run Restore-Linux.sh (in the Restore directory) to restore stock firmware first."
+        read -p "Press Enter to exit..."
+        exit 1
+    fi
+
+    if [ -z "$BACKUP_PL" ]; then
+        echo ""
+        echo "[!] Error: No stock preloader backup found in the backup directory!"
+        echo "[!] Cannot safely restore from a spoofed bootloader without stock preloader."
+        echo "[!] Please copy preloader_ruby.bin into the bin/backup/ directory, then try again."
+        read -p "Press Enter to exit..."
+        exit 1
+    fi
+
+    echo "[*] Stock backups found. Restoring device to stock firmware..."
+    echo ""
+    echo "[1/4] Flashing preloader..."
+    echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
+    flash_retry "preloader" ./antumbra -c w preloader "$BACKUP_PL" --da "$DA_FILE" -p "$PL_FILE"
+
+    echo ""
+    echo "[2/4] Flashing preloader_backup..."
+    echo "If the device rebooted, please power it off again, then reconnect."
+    flash_retry "preloader_backup" ./antumbra -c w preloader_backup "$BACKUP_PL" --da "$DA_FILE" -p "$PL_FILE"
+
+    echo ""
+    echo "[3/4] Flashing lk_a..."
+    echo "If the device rebooted, please power it off again, then reconnect."
+    flash_retry "lk_a" ./antumbra -c w lk_a "$SPOOF_RESTORE_LK_A" --da "$DA_FILE" -p "$PL_FILE"
+
+    echo ""
+    echo "[4/4] Flashing lk_b..."
+    echo "If the device rebooted, please power it off again, then reconnect."
+    flash_retry "lk_b" ./antumbra -c w lk_b "$SPOOF_RESTORE_LK_B" --da "$DA_FILE" -p "$PL_FILE"
+
+    echo ""
+    echo "Formatting para partition..."
+    echo "If the device rebooted, please power it off again, then reconnect."
+    flash_retry "para format" ./antumbra -c ft para --da "$DA_FILE" -p "$PL_FILE"
+
+    echo ""
+    echo "[*] Device successfully restored to stock!"
+    echo "[*] Please run Unlock-Linux.sh again to unlock your clean stock bootloader."
+    read -p "Press Enter to exit..."
+    exit 0
+fi
+
 if [ $PATCH_EXIT -ne 0 ]; then
     if echo "$PATCH_OUTPUT" | grep -qi "public key modulus not found"; then
         echo ""
         echo "[*] Notice: The LK image on your device is already patched."
-        if [ ! -f "backup/lk_a.img" ]; then
+
+        STOCK_LK_SOURCE=""
+        if [ -f "backup/lk_a.img" ]; then
+            STOCK_LK_SOURCE="backup/lk_a.img"
+        elif [ -f "backup/lk.img" ]; then
+            STOCK_LK_SOURCE="backup/lk.img"
+        fi
+
+        if [ -z "$STOCK_LK_SOURCE" ]; then
             echo ""
             echo "[!] Error: No stock backup was found in the backup directory!"
             echo "[!] Cannot re-patch without a clean stock backup."
-            echo "[!] Please place your stock lk_a.img into the backup directory, or restore stock firmware, then try again."
+            echo "[!] Please place your stock lk.img (or lk_a.img) into the backup directory, or restore stock firmware, then try again."
             read -p "Press Enter to exit..."
             exit 1
         fi
         echo "[*] Found stock backup in backup directory. Using it to re-patch and synchronize keys..."
-        cp backup/lk_a.img lk_a.img
+        cp "$STOCK_LK_SOURCE" lk_a.img
         python3 lk-unlock.py patch lk_a.img -o lk_patched.img
         if [ $? -ne 0 ]; then
             echo ""
@@ -203,6 +290,8 @@ echo " 2. Wait 10s with the cable disconnected."
 echo " 3. Power on into Fastboot mode:"
 echo "    -> Press and hold (Volume Down + Power) until fastboot shows."
 echo " 4. Reconnect the USB cable."
+echo ""
+echo " Unable to reboot? Run the restore script and try again!"
 echo "================================================================="
 echo ""
 echo "Waiting for fastboot device..."
