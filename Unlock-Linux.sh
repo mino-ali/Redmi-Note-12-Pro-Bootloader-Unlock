@@ -55,12 +55,9 @@ if [ ! -f "$PL_FILE" ]; then
 fi
 echo ""
 echo "Checking and installing required Python dependencies..."
-python3 -m pip install cryptography git+https://github.com/R0rt1z2/liblk --break-system-packages
+python3 -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk --break-system-packages > /dev/null 2>&1 || python3 -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-    echo ""
-    echo "An error occurred while installing dependencies. Please check the output above."
-    read -p "Press Enter to exit..."
-    exit 1
+    echo "[!] Warning: Failed to install Python dependencies. Continuing in offline mode..."
 fi
 
 MM_STOPPED=0

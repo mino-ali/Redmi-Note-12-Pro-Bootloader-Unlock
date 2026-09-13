@@ -62,12 +62,9 @@ if not exist "%PL_FILE%" (
 
 echo.
 echo Checking and installing required Python dependencies...
-python -m pip install cryptography git+https://github.com/R0rt1z2/liblk
+python -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo.
-    echo An error occurred while installing dependencies. Please check the output above.
-    pause
-    exit /b
+    echo [!] Warning: Failed to install Python dependencies. Continuing in offline mode...
 )
 
 if exist private.pem del /f /q private.pem
