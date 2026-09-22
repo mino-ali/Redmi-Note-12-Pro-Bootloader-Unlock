@@ -68,7 +68,7 @@ If something goes wrong during the unlock process and your device fails to boot 
 
 ## 📦 Requirements
 
-### Windows
+### Windows 10/11
 1. Python (make sure it is added to your system PATH)
 2. Git
 3. Fastboot / Android USB drivers
