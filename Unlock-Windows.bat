@@ -92,16 +92,11 @@ if /i "%PL_FILE%"=="preloader_ruby.bin" if exist "preloader_ruby.bin" (
         )
     )
 )
-echo [1/2] Reading lk_a...
+echo Reading lk_a...
 echo Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)
 if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c r lk_a lk_a.img --da %DA_FILE% -p %PL_FILE%
-
-echo.
-echo [2/2] Reading lk_b...
-echo If the device rebooted, please power it off again, then reconnect.
-if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
-antumbra -c r lk_b lk_b.img --da %DA_FILE% -p %PL_FILE%
+copy /y lk_a.img lk_b.img >nul 2>&1
 echo.
 echo Patching lk...
 python lk-unlock.py patch lk_a.img -o lk_patched.img > patch_log.tmp 2>&1
@@ -249,16 +244,10 @@ if not exist "backup\lk_a.img" (
 
 :do_flash
 echo.
-echo [1/2] Flashing lk_a...
+echo Flashing lk_a...
 echo If the device rebooted, please power it off again, then reconnect.
 if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c w lk_a lk_patched.img --da %DA_FILE% -p %PL_FILE%
-
-echo.
-echo [2/2] Flashing lk_b...
-echo If the device rebooted, please power it off again, then reconnect.
-if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
-antumbra -c w lk_b lk_patched.img --da %DA_FILE% -p %PL_FILE%
 echo.
 echo Cleaning up temporary BROM driver assignment...
 for /f "tokens=*" %%i in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -match 'USB\\\\VID_0E8D&PID_0003' } | Select-Object -ExpandProperty InstanceId"') do (
@@ -290,6 +279,7 @@ echo.
 
 echo Waiting for fastboot device...
 fastboot wait-for-device
+fastboot set_active a >nul 2>&1
 
 echo.
 echo Device detected! Starting unlock...

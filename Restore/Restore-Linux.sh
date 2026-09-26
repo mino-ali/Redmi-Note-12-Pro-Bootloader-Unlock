@@ -97,15 +97,21 @@ if [ -n "$BACKUP_PL" ]; then
     echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
     flash_retry "preloader" ./antumbra -c w preloader "$BACKUP_PL" --da "$DA_FILE" -p "$PL_FILE"
 
+    sleep 3
+
     echo ""
     echo "[2/4] Flashing preloader_backup..."
     echo "If the device rebooted, please power it off again, then reconnect."
     flash_retry "preloader_backup" ./antumbra -c w preloader_backup "$BACKUP_PL" --da "$DA_FILE" -p "$PL_FILE"
 
+    sleep 3
+
     echo ""
     echo "[3/4] Flashing lk_a..."
     echo "If the device rebooted, please power it off again, then reconnect."
     flash_retry "lk_a" ./antumbra -c w lk_a "$LK_A_TARGET" --da "$DA_FILE" -p "$PL_FILE"
+
+    sleep 3
 
     echo ""
     echo "[4/4] Flashing lk_b..."
@@ -117,11 +123,15 @@ else
     echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
     flash_retry "lk_a" ./antumbra -c w lk_a "$LK_A_TARGET" --da "$DA_FILE" -p "$PL_FILE"
 
+    sleep 3
+
     echo ""
     echo "[2/2] Flashing lk_b..."
     echo "If the device rebooted, please power it off again, then reconnect."
     flash_retry "lk_b" ./antumbra -c w lk_b "$LK_B_TARGET" --da "$DA_FILE" -p "$PL_FILE"
 fi
+
+sleep 3
 
 echo ""
 echo "Formatting para partition..."
