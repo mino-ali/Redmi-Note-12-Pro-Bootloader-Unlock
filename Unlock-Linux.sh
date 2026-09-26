@@ -57,7 +57,8 @@ echo ""
 echo "Checking and installing required Python dependencies..."
 python3 -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk --break-system-packages > /dev/null 2>&1 || python3 -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-    echo "[!] Warning: Failed to install Python dependencies. Continuing in offline mode..."
+    echo "Warning: installing cryptography and liblk failed if patching lk fails please run this manually"
+    echo "\"python3 -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk --break-system-packages\""
 fi
 
 MM_STOPPED=0
@@ -213,7 +214,7 @@ if echo "$PATCH_OUTPUT" | grep -qi "Skipping cert bypass"; then
 
     echo ""
     echo "[*] Device successfully restored to stock!"
-    echo "[*] Please run Unlock-Linux.sh again to unlock your clean stock bootloader."
+    echo "[*] Please reboot then run Unlock-Linux.sh again to unlock your bootloader."
     read -p "Press Enter to exit..."
     exit 0
 fi

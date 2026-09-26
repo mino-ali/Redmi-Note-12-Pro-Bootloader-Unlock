@@ -64,7 +64,8 @@ echo.
 echo Checking and installing required Python dependencies...
 python -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo [!] Warning: Failed to install Python dependencies. Continuing in offline mode...
+    echo Warning: installing cryptography and liblk failed if patching lk fails please run this manually
+    echo "python -m pip install -q cryptography git+https://github.com/R0rt1z2/liblk"
 )
 
 if exist private.pem del /f /q private.pem
@@ -106,7 +107,7 @@ type patch_log.tmp
 findstr /i /c:"Skipping cert bypass" patch_log.tmp >nul 2>&1
 if not errorlevel 1 goto :spoofed_bootloader
 
-if %PATCH_ERR% EQU 0 goto :patch_success
+if "%PATCH_ERR%"=="0" goto :patch_success
 
 findstr /i /c:"modulus not found" patch_log.tmp >nul 2>&1
 if not errorlevel 1 goto :already_patched
@@ -200,7 +201,7 @@ echo Driver cleanup complete.
 
 echo.
 echo [*] Device successfully restored to stock!
-echo [*] Please run Unlock-Windows.bat again to unlock your clean stock bootloader.
+echo [*] Please reboot then run Unlock-Windows.bat again to unlock your bootloader.
 pause
 exit /b 0
 
