@@ -38,6 +38,7 @@ flash_retry() {
         else
             echo "  [Attempt $attempt/$max_attempts] Retrying $desc..."
         fi
+        rm -f .antumbra_state
         if "$@"; then
             return 0
         fi

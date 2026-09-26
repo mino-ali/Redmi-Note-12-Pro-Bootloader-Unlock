@@ -71,6 +71,7 @@ if exist private.pem del /f /q private.pem
 if exist public.pem del /f /q public.pem
 if exist signature.bin del /f /q signature.bin
 if exist lk_patched.img del /f /q lk_patched.img
+if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 echo.
 echo Checking for MediaTek VCOM drivers...
 if not exist "%TEMP%\mtk_vcom_backup" mkdir "%TEMP%\mtk_vcom_backup"
@@ -91,17 +92,15 @@ if /i "%PL_FILE%"=="preloader_ruby.bin" if exist "preloader_ruby.bin" (
         )
     )
 )
-echo [1/3] Reading preloader...
+echo [1/2] Reading lk_a...
 echo Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)
-antumbra -c r preloader %PL_FILE% --da %DA_FILE% -p %PL_FILE%
-echo.
-echo [2/3] Reading lk_a...
-echo If the device rebooted, please power it off again, then reconnect.
+if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c r lk_a lk_a.img --da %DA_FILE% -p %PL_FILE%
 
 echo.
-echo [3/3] Reading lk_b...
+echo [2/2] Reading lk_b...
 echo If the device rebooted, please power it off again, then reconnect.
+if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c r lk_b lk_b.img --da %DA_FILE% -p %PL_FILE%
 echo.
 echo Patching lk...
@@ -252,11 +251,13 @@ if not exist "backup\lk_a.img" (
 echo.
 echo [1/2] Flashing lk_a...
 echo If the device rebooted, please power it off again, then reconnect.
+if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c w lk_a lk_patched.img --da %DA_FILE% -p %PL_FILE%
 
 echo.
 echo [2/2] Flashing lk_b...
 echo If the device rebooted, please power it off again, then reconnect.
+if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c w lk_b lk_patched.img --da %DA_FILE% -p %PL_FILE%
 echo.
 echo Cleaning up temporary BROM driver assignment...

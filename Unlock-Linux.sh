@@ -90,6 +90,7 @@ flash_retry() {
         else
             echo "  [Attempt $attempt/$max_attempts] Retrying $desc..."
         fi
+        rm -f .antumbra_state
         if "$@"; then
             return 0
         fi
@@ -112,6 +113,7 @@ read_retry() {
         else
             echo "  [Attempt $attempt/$max_attempts] Retrying $desc..."
         fi
+        rm -f .antumbra_state
         if "$@"; then
             return 0
         fi
@@ -124,7 +126,7 @@ read_retry() {
     exit 1
 }
 
-rm -f private.pem public.pem signature.bin lk_patched.img
+rm -f private.pem public.pem signature.bin lk_patched.img .antumbra_state
 
 if [ "$PL_FILE" = "preloader_ruby.bin" ] && [ -f "preloader_ruby.bin" ]; then
     PL_SIZE=$(stat -c%s "preloader_ruby.bin" 2>/dev/null || stat -f%z "preloader_ruby.bin" 2>/dev/null || echo 0)
@@ -133,18 +135,13 @@ if [ "$PL_FILE" = "preloader_ruby.bin" ] && [ -f "preloader_ruby.bin" ]; then
         cp -f "preloader_ruby.bin" "backup/preloader_ruby.bin" >/dev/null 2>&1
     fi
 fi
-
 echo ""
-echo "[1/3] Reading preloader..."
+echo "[1/2] Reading lk_a..."
 echo "Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)"
-read_retry "preloader" ./antumbra -c r preloader "$PL_FILE" --da "$DA_FILE" -p "$PL_FILE"
-echo ""
-echo "[2/3] Reading lk_a..."
-echo "If the device rebooted, please power it off again, then reconnect."
 read_retry "lk_a" ./antumbra -c r lk_a lk_a.img --da "$DA_FILE" -p "$PL_FILE"
 
 echo ""
-echo "[3/3] Reading lk_b..."
+echo "[2/2] Reading lk_b..."
 echo "If the device rebooted, please power it off again, then reconnect."
 read_retry "lk_b" ./antumbra -c r lk_b lk_b.img --da "$DA_FILE" -p "$PL_FILE"
 

@@ -65,41 +65,50 @@ echo Driver registration complete.
 set "BACKUP_PL="
 if exist "backup\preloader_ruby.bin" set "BACKUP_PL=backup\preloader_ruby.bin"
 
+if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
+
 if defined BACKUP_PL (
     echo.
     echo [1/4] Flashing preloader...
     echo Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)
+    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w preloader %BACKUP_PL% --da %DA_FILE% -p %PL_FILE%
 
     echo.
     echo [2/4] Flashing preloader_backup...
     echo If the device rebooted, please power it off again, then reconnect.
+    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w preloader_backup %BACKUP_PL% --da %DA_FILE% -p %PL_FILE%
 
     echo.
     echo [3/4] Flashing lk_a...
     echo If the device rebooted, please power it off again, then reconnect.
+    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_a %LK_A_TARGET% --da %DA_FILE% -p %PL_FILE%
 
     echo.
     echo [4/4] Flashing lk_b...
     echo If the device rebooted, please power it off again, then reconnect.
+    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_b %LK_B_TARGET% --da %DA_FILE% -p %PL_FILE%
 ) else (
     echo.
     echo [1/2] Flashing lk_a...
     echo Please power off the device completely, then connect the USB cable and hold (Volume up + Volume down + Power)
+    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_a %LK_A_TARGET% --da %DA_FILE% -p %PL_FILE%
 
     echo.
     echo [2/2] Flashing lk_b...
     echo If the device rebooted, please power it off again, then reconnect.
+    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_b %LK_B_TARGET% --da %DA_FILE% -p %PL_FILE%
 )
 
 echo.
 echo Formatting para partition...
 echo If the device rebooted, please power it off again, then reconnect.
+if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c ft para --da %DA_FILE% -p %PL_FILE%
 echo.
 echo Cleaning up temporary BROM driver assignment...
