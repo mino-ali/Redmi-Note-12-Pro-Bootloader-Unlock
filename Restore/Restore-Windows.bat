@@ -74,28 +74,19 @@ if defined BACKUP_PL (
     if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w preloader %BACKUP_PL% --da %DA_FILE% -p %PL_FILE%
 
-    timeout /t 3 /nobreak >nul
-
     echo.
     echo [2/4] Flashing preloader_backup...
     echo If the device rebooted, please power it off again, then reconnect.
-    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w preloader_backup %BACKUP_PL% --da %DA_FILE% -p %PL_FILE%
-
-    timeout /t 3 /nobreak >nul
 
     echo.
     echo [3/4] Flashing lk_a...
     echo If the device rebooted, please power it off again, then reconnect.
-    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_a %LK_A_TARGET% --da %DA_FILE% -p %PL_FILE%
-
-    timeout /t 3 /nobreak >nul
 
     echo.
     echo [4/4] Flashing lk_b...
     echo If the device rebooted, please power it off again, then reconnect.
-    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_b %LK_B_TARGET% --da %DA_FILE% -p %PL_FILE%
 ) else (
     echo.
@@ -104,16 +95,11 @@ if defined BACKUP_PL (
     if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_a %LK_A_TARGET% --da %DA_FILE% -p %PL_FILE%
 
-    timeout /t 3 /nobreak >nul
-
     echo.
     echo [2/2] Flashing lk_b...
     echo If the device rebooted, please power it off again, then reconnect.
-    if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
     antumbra -c w lk_b %LK_B_TARGET% --da %DA_FILE% -p %PL_FILE%
 )
-
-timeout /t 3 /nobreak >nul
 
 echo.
 echo Formatting para partition...

@@ -244,10 +244,15 @@ if not exist "backup\lk_a.img" (
 
 :do_flash
 echo.
-echo Flashing lk_a...
+echo [1/2] Flashing lk_a...
 echo If the device rebooted, please power it off again, then reconnect.
 if exist .antumbra_state del /f /q .antumbra_state >nul 2>&1
 antumbra -c w lk_a lk_patched.img --da %DA_FILE% -p %PL_FILE%
+
+echo.
+echo [2/2] Flashing lk_b...
+echo If the device rebooted, please power it off again, then reconnect.
+antumbra -c w lk_b lk_patched.img --da %DA_FILE% -p %PL_FILE%
 echo.
 echo Cleaning up temporary BROM driver assignment...
 for /f "tokens=*" %%i in ('powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-PnpDevice -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -match 'USB\\\\VID_0E8D&PID_0003' } | Select-Object -ExpandProperty InstanceId"') do (

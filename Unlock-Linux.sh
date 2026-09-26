@@ -89,8 +89,8 @@ flash_retry() {
             echo "  [Attempt 1/$max_attempts] Connecting to $desc..."
         else
             echo "  [Attempt $attempt/$max_attempts] Retrying $desc..."
+            rm -f .antumbra_state
         fi
-        rm -f .antumbra_state
         if "$@"; then
             return 0
         fi
@@ -262,9 +262,14 @@ else
 fi
 
 echo ""
-echo "Flashing lk_a..."
+echo "[1/2] Flashing lk_a..."
 echo "If the device rebooted, please power it off again, then reconnect."
 flash_retry "lk_a" ./antumbra -c w lk_a lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
+
+echo ""
+echo "[2/2] Flashing lk_b..."
+echo "If the device rebooted, please power it off again, then reconnect."
+flash_retry "lk_b" ./antumbra -c w lk_b lk_patched.img --da "$DA_FILE" -p "$PL_FILE"
 echo ""
 echo ""
 echo "================================================================="
