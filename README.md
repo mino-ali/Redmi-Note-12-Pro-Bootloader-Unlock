@@ -1,13 +1,13 @@
-<h1 align="center">🔓 Redmi Note 12 Pro / Pro+ / Discovery (ruby) Bootloader Unlock</h1>
+<h1 align="center">🔓 Xiaomi MediaTek Bootloader Unlock</h1>
 
 <p align="center">
-  <b>Automated LK-Unlock Exploit for <code>ruby</code> / <code>rubypro</code></b>
+  <b>Automated LK-Unlock Exploit for Xiaomi MediaTek Devices</b>
 </p>
 
 <p align="center">
   <a href="https://www.gnu.org/licenses/agpl-3.0"><img src="https://img.shields.io/badge/License-AGPL_v3-blue.svg" alt="License: AGPL v3"></a>
-  <img src="https://img.shields.io/badge/Device-Redmi_Note_12_Pro%20%2F%20Pro%2B%20(ruby)-orange.svg" alt="Device: ruby">
-  <img src="https://img.shields.io/badge/SoC-MediaTek_Dimensity_1080-red.svg" alt="SoC: Dimensity 1080">
+  <img src="https://img.shields.io/badge/Device-Xiaomi_MediaTek-orange.svg" alt="Device: Xiaomi MediaTek">
+  <img src="https://img.shields.io/badge/SoC-MediaTek_MTK-red.svg" alt="SoC: MediaTek MTK">
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-brightgreen.svg" alt="Platform">
 </p>
 
@@ -17,8 +17,8 @@
 
 > [!WARNING]
 > **Device compatibility & liability warning:**  
-> With a few modifications, this exploit workflow can work on any Xiaomi MediaTek (MTK) device. **However, this repository is configured for and only tested on "ruby" (Redmi Note 12 Pro / Pro+ / Discovery 5G).**  
-> Do not attempt to use it with any other device. The author of this tool is not responsible for any damage, bricked devices, or hardware issues caused by misuse of it. Proceed entirely at your own risk.
+> This script is designed for Xiaomi MediaTek (MTK) devices that are vulnerable to the Kamakiri BROM exploit (allowing partition read/write access via BROM mode) and use Xiaomi's RSA-2048 signature verification in Little Kernel (LK) for bootloader unlocking.  
+> Devices with newer non-RSA key formats or hardware-bound security architectures that cannot be modified via BROM are not supported. The author of this tool is not responsible for any damage, bricked devices, or hardware issues caused by misuse. Proceed entirely at your own risk.
 
 > [!CAUTION]
 > **Data loss warning:**  
@@ -88,29 +88,30 @@ If something goes wrong during the unlock process and your device fails to boot 
 
 > [!NOTE]
 > **Q: When trying to reboot into Fastboot mode, my phone is stuck in BROM mode. What should I do?**  
-> **A:** First, run the [Restore script](#emergency-restore-scripts) for your operating system, then try the unlock process again. If the issue is still there, you will need to put **lk.img** and **preloader_ruby.bin** from your firmware in your backup folder inside the bin folder then run the [Restore script](#emergency-restore-scripts).
+> **A:** First, run the [Restore script](#emergency-restore-scripts) for your operating system, then try the unlock process again. If the issue persists, place **lk.img** and your device's **preloader** from your stock firmware inside the `bin/backup/` folder, then run the [Restore script](#emergency-restore-scripts).
 > 
 > **Q: I get "Failed to get storage for partition parsing" or "Partition 'lk_a' not found on device". What should I do?**  
 > **A:**  
 > 1. Make sure your phone is **completely powered off** before connecting (hold Power for 15 seconds until completely shut down, then wait 5 seconds before holding the 3-button BROM combo).  
-> 2. Ensure `preloader_ruby.bin` and `MTK_AllInOne_DA.bin` placed in `bin/` were extracted from the Fastboot ROM matching the **exact firmware version** (MIUI vs HyperOS) currently installed on the phone.  
+> 2. Ensure the preloader and Download Agent placed in `bin/` were extracted from the Fastboot ROM matching the **exact firmware version** (MIUI vs HyperOS) currently installed on the phone.  
 > 3. Use a direct **USB 2.0 port** on the back of your motherboard (avoid USB 3.0/3.2 ports, USB hubs, or Type-C to Type-C cables as they can cause transfer timeouts).
 
 ---
 
 ## 📁 Required Files Setup
 
-To respect copyright and open-source licensing laws, proprietary vendor firmware binaries are **not** included in this repository. You must extract them from your official stock Fastboot ROM before running the scripts:
+To respect copyright and open-source licensing laws, proprietary vendor firmware binaries are **not** included in this repository. You must extract them from your device's official stock Fastboot ROM before running the scripts:
 
 1. Download the official Xiaomi Fastboot ROM (`.tgz`) matching the exact firmware version currently running on your phone.
 2. Extract the downloaded Fastboot ROM package on your computer.
 3. Copy the following 2 files directly into the `bin/` folder:
    * From the `images/` folder of the extracted ROM:  
-     Copy `preloader_ruby.bin` into the `bin/` folder.
-   * From the folder of the extracted ROM:  
-     Copy `MTK_AllInOne_DA.bin` into the `bin/` folder.
+     Copy your preloader file (`preloader_*.bin`, `preloader.bin`, or `preloader_raw.img`) into the `bin/` folder.
+   * From the extracted ROM folder:  
+     Copy your Download Agent binary (`MTK_AllInOne_DA*.bin`, `DA_v6*.bin`, or `DA.bin`) into the `bin/` folder.
 
-Ensure both `bin/preloader_ruby.bin` and `bin/MTK_AllInOne_DA.bin` are in place before proceeding.
+The scripts will automatically detect your preloader and Download Agent files.
+
 ---
 
 ## 🚀 Step-by-Step Unlock Tutorial
@@ -118,7 +119,8 @@ Ensure both `bin/preloader_ruby.bin` and `bin/MTK_AllInOne_DA.bin` are in place 
 ### Step 1 (Windows): Launch the script
 1. Right-click `Unlock-Windows.bat` and select **Run as administrator**.
 2. When prompted by the data wipe warning, type `Y` and press Enter.
-3. Proceed to Step 2.
+3. When prompted for cert bypass mode, just press **Enter** (defaults to `1. override`).
+4. Proceed to Step 2.
 
 ### Step 1 (Linux): Launch the script
 1. Open a terminal in the directory, make the script executable, and run with sudo:
@@ -127,7 +129,12 @@ Ensure both `bin/preloader_ruby.bin` and `bin/MTK_AllInOne_DA.bin` are in place 
    sudo ./Unlock-Linux.sh
    ```
 2. When prompted by the data wipe warning, type `Y` and press Enter.
-3. Proceed to Step 2.
+3. When prompted for cert bypass mode, just press **Enter** (defaults to `1. override`).
+4. Proceed to Step 2.
+
+> [!NOTE]
+> **When to use wrap mode (option 2):**  
+> Just press **Enter** for almost all devices. Wrap mode is only needed for some older legacy devices. If after rebooting your phone gets stuck in BROM or boots to a "Red State" screen, or the terminal says cert2 could not be parsed, run the restore script and try again choosing option **2 (wrap)**.
 
 ---
 
