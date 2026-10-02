@@ -135,7 +135,7 @@ Ensure both your preloader and Download Agent files are placed inside the `bin/`
 > [!NOTE]
 > **Cert bypass mode selection:**  
 > Just press **Enter** (default option 1).  
-> Wrap mode (option 2) is only for older legacy devices. If after rebooting your phone gets stuck in BROM or boots to a "Red State" screen, check if the terminal says `cert2 could not be parsed`. If so, run the restore script first, then re-run unlock and choose option **2 (wrap)**.
+> Wrap mode (option 2) is only for older legacy devices. If after rebooting your phone gets stuck in BROM or boots to a "Red State" screen, check if the terminal says `cert2 could not be parsed` during patching LK. If so, run the restore script first, then re-run unlock and choose option **2 (wrap)**.
 
 ---
 
