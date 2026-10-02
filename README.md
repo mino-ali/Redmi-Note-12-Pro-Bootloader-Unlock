@@ -13,7 +13,7 @@
 
 ---
 
-## ⚠️ Disclaimers & Pre-Checks
+## Disclaimers & Pre-Checks
 
 > [!WARNING]
 > **Device compatibility & liability warning:**  
@@ -29,7 +29,7 @@
 
 ---
 
-## 🚨 Critical Notes
+## Critical Notes
 
 > [!IMPORTANT]
 > ### 1. Bootloader relock after flashing any ROM
@@ -54,7 +54,7 @@
 ---
 
 <span id="emergency-restore-scripts"></span>
-## 🔄 Emergency Restore Scripts
+## Emergency Restore Scripts
 
 If something goes wrong during the unlock process and your device fails to boot up, a `Restore/` folder is included to flash your original stock partition backups back onto the device:
 
@@ -66,7 +66,7 @@ If something goes wrong during the unlock process and your device fails to boot 
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 ### Windows 10/11
 1. Python (make sure it is added to your system PATH)
@@ -84,7 +84,7 @@ If something goes wrong during the unlock process and your device fails to boot 
 > After installing all requirements for the first time, a system reboot is required.
 ---
 
-## ❓ Frequently Asked Questions (FAQ)
+## Frequently Asked Questions (FAQ)
 
 > [!NOTE]
 > **Q: When trying to reboot into Fastboot mode, my phone is stuck in BROM mode. What should I do?**  
@@ -98,7 +98,7 @@ If something goes wrong during the unlock process and your device fails to boot 
 
 ---
 
-## 📁 Required Files Setup
+## Required Files Setup
 
 To respect copyright and open-source licensing laws, proprietary vendor firmware binaries are **not** included in this repository. You must extract them from your device's official stock Fastboot ROM before running the scripts:
 
@@ -114,7 +114,7 @@ Ensure both your preloader and Download Agent files are placed inside the `bin/`
 
 ---
 
-## 🚀 Step-by-Step Unlock Tutorial
+## Step-by-Step Unlock Tutorial
 
 ### Step 1 (Windows): Launch the script
 1. Right-click `Unlock-Windows.bat` and select **Run as administrator**.
@@ -159,7 +159,7 @@ Ensure both your preloader and Download Agent files are placed inside the `bin/`
 
 ---
 
-## 📜 Credits
+## Credits
 
 * [lk-unlock](https://github.com/georgiynesterov/lk-unlock) by [@georgiynesterov](https://github.com/georgiynesterov) for the original public key patching and token forging exploit.
 * Cert bypass code adapted from [lkpatcher](https://github.com/R0rt1z2/lkpatcher) and [liblk](https://github.com/R0rt1z2/liblk) by [@R0rt1z2](https://github.com/R0rt1z2).
@@ -171,6 +171,6 @@ Ensure both your preloader and Download Agent files are placed inside the `bin/`
 * Xiaomi & MediaTek bootloader research community.
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **GNU Affero General Public License v3.0** — see [LICENSE](https://www.gnu.org/licenses/agpl-3.0) for details.
