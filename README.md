@@ -92,7 +92,7 @@ If something goes wrong during the unlock process and your device fails to boot 
 > 
 > **Q: I get "Failed to get storage for partition parsing" or "Partition 'lk_a' not found on device". What should I do?**  
 > **A:**  
-> 1. Make sure your phone is **completely powered off** before connecting (hold Power for 15 seconds until completely shut down, then wait 5 seconds before holding the 3-button BROM combo).  
+> 1. Make sure your phone is **completely powered off** before connecting (hold Power for 15 seconds until completely shut down, then wait 5 seconds before connecting to BROM).  
 > 2. Ensure the preloader and Download Agent placed in `bin/` were extracted from the Fastboot ROM matching the **exact firmware version** (MIUI vs HyperOS) currently installed on the phone.  
 > 3. Use a direct **USB 2.0 port** on the back of your motherboard (avoid USB 3.0/3.2 ports, USB hubs, or Type-C to Type-C cables as they can cause transfer timeouts).
 
