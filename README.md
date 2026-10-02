@@ -141,10 +141,11 @@ Ensure both your preloader and Download Agent files are placed inside the `bin/`
 
 ### Step 2: Connect the phone in BROM mode
 1. Turn off your phone completely.
-2. Press and hold all three physical buttons at the exact same time:  
-   `[Volume Up]` + `[Volume Down]` + `[Power]`
-3. While continuing to hold down all three buttons, connect the USB-C cable to the phone.
-4. As soon as the script detects the device and starts reading the partitions, release the buttons.
+2. Connect in BROM mode using the combination for your device:
+   * **Standard (Most modern MTK devices):** Press and hold **`[Volume Down]`** (or both **`[Volume Up]` + `[Volume Down]`**) — *do not press Power* — and connect the USB cable.
+   * **Alternative (e.g. Redmi Note 12 Pro):** Press and hold all three buttons at once: **`[Volume Up]` + `[Volume Down]` + `[Power]`**, then connect the USB cable.
+   *(If your phone is stuck in a bootloop, hold all 3 buttons with the USB cable connected until the screen goes black, then release Power while keeping the volume buttons held).*
+3. As soon as the script detects the device and starts reading the partitions, release the buttons.
 
 ---
 
