@@ -1,4 +1,4 @@
-<h1 align="center">🔓 Xiaomi MediaTek Bootloader Unlock</h1>
+<h1 align="center"> Xiaomi MediaTek LK Bootloader Unlock</h1>
 
 <p align="center">
   <b>Automated LK-Unlock Exploit for Xiaomi MediaTek Devices</b>
@@ -166,7 +166,7 @@ The scripts will automatically detect your preloader and Download Agent files.
 * [Penumbra](https://github.com/shomykohai/penumbra) (Antumbra CLI) by [@shomykohai](https://github.com/shomykohai) for dumping and flashing partitions via MediaTek BROM.
 * [mtkclient](https://github.com/bkerler/mtkclient) by [@bkerler](https://github.com/bkerler) for MediaTek exploitation and research.
 * [libwdi](https://github.com/pbatard/libwdi) (`wdi-simple`) by [@pbatard](https://github.com/pbatard) for automated USB driver installation.
-* [@LucaCraft89](https://github.com/LucaCraft89) for script improvements and the global variant patch.
+* [@LucaCraft89](https://github.com/LucaCraft89) for script improvements.
 * [@YagizErdemir06](https://github.com/YagizErdemir06) for overall support.
 * Xiaomi & MediaTek bootloader research community.
 ---
