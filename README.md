@@ -106,11 +106,11 @@ To respect copyright and open-source licensing laws, proprietary vendor firmware
 2. Extract the downloaded Fastboot ROM package on your computer.
 3. Copy the following 2 files directly into the `bin/` folder:
    * From the `images/` folder of the extracted ROM:  
-     Copy your preloader file (`preloader_*.bin`, `preloader.bin`, or `preloader_raw.img`) into the `bin/` folder.
+     Copy your device's preloader file (e.g. `preloader_ruby.bin` or `preloader.bin`) into the `bin/` folder.
    * From the extracted ROM folder:  
-     Copy your Download Agent binary (`MTK_AllInOne_DA*.bin`, `DA_v6*.bin`, or `DA.bin`) into the `bin/` folder.
+     Copy your Download Agent binary (e.g. `MTK_AllInOne_DA.bin` or `DA.bin`) into the `bin/` folder.
 
-The scripts will automatically detect your preloader and Download Agent files.
+Ensure both your preloader and Download Agent files are placed inside the `bin/` folder before proceeding.
 
 ---
 
@@ -133,8 +133,9 @@ The scripts will automatically detect your preloader and Download Agent files.
 4. Proceed to Step 2.
 
 > [!NOTE]
-> **When to use wrap mode (option 2):**  
-> Just press **Enter** for almost all devices. Wrap mode is only needed for some older legacy devices. If after rebooting your phone gets stuck in BROM or boots to a "Red State" screen, or the terminal says cert2 could not be parsed, run the restore script and try again choosing option **2 (wrap)**.
+> **Cert bypass mode selection:**  
+> Just press **Enter** (default option 1).  
+> Wrap mode (option 2) is only for older legacy devices. If after rebooting your phone gets stuck in BROM or boots to a "Red State" screen, check if the terminal says `cert2 could not be parsed`. If so, run the restore script first, then re-run unlock and choose option **2 (wrap)**.
 
 ---
 
