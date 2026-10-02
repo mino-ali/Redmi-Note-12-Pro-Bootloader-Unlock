@@ -17,7 +17,7 @@
 
 > [!WARNING]
 > **Device compatibility & liability warning:**  
-> This script is designed for Xiaomi MediaTek (MTK) devices that are vulnerable to the Kamakiri BROM exploit (allowing partition read/write access via BROM mode) and use Xiaomi's RSA-2048 signature verification in Little Kernel (LK) for bootloader unlocking.  
+> This script is designed for Xiaomi MediaTek (MTK) devices that are vulnerable to the Kamakiri BROM exploit (allowing partition read/write access via BROM mode) and use Xiaomi's RSA-2048 signature verification in Little Kernel (LK) for bootloader unlocking, Check [Discussion #5](https://github.com/mino-ali/Xiaomi-MTK-Bootloader-Unlock/discussions/5#discussioncomment-18721629).  
 > Devices with newer non-RSA key formats or hardware-bound security architectures that cannot be modified via BROM are not supported. The author of this tool is not responsible for any damage, bricked devices, or hardware issues caused by misuse. Proceed entirely at your own risk.
 
 > [!CAUTION]
